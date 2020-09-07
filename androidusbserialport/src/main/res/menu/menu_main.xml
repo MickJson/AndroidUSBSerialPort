@@ -1,0 +1,11 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_setting1"
+        android:orderInCategory="100"
+        android:title="@string/android_serial_port" />
+
+    <item
+        android:id="@+id/action_setting2"
+        android:orderInCategory="100"
+        android:title="@string/usb_serial_port" />
+</menu>
