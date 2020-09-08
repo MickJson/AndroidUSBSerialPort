@@ -42,6 +42,9 @@ public class UsbSerialPortController implements SerialInputOutputManager.Listene
         mBroadcastReceiver.registerReceiver(context, this);
     }
 
+    /**
+     * 获取所有USB串口设备
+     */
     public List<UsbSerialPort> getAllSerialPort() {
         List<UsbSerialDriver> drivers = UsbSerialProber.getDefaultProber().findAllDrivers(mUsbManager);
         List<UsbSerialPort> result = new ArrayList<>();
@@ -102,6 +105,9 @@ public class UsbSerialPortController implements SerialInputOutputManager.Listene
         return isOpened;
     }
 
+    /**
+     * 关闭串口
+     */
     public void closeSerialPort() {
         try {
             if (mUsbSerialPort != null) {

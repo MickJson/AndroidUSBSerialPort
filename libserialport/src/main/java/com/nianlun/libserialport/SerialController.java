@@ -1,7 +1,5 @@
 package com.nianlun.libserialport;
 
-import com.nianlun.libserialport.usbdriver.HexDump;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -79,16 +77,15 @@ public class SerialController {
     /**
      * 发送串口数据
      *
-     * @param data 发送数据
+     * @param bytes 发送数据
      */
-    public void sendSerialPort(String data) {
+    public void sendSerialPort(byte[] bytes) {
         if (!isOpened) {
             return;
         }
         try {
-            byte[] sendData = HexDump.hexStringToByteArray(data);
             if (outputStream != null) {
-                outputStream.write(sendData);
+                outputStream.write(bytes);
                 outputStream.flush();
             }
         } catch (IOException e) {
@@ -118,9 +115,8 @@ public class SerialController {
                     try {
                         int size = inputStream.read(readData);
                         if (size > 0) {
-                            String readString = HexDump.dumpHexString(readData, 0, size);
                             if (mOnSerialListener != null) {
-                                mOnSerialListener.onReceivedData(readString);
+                                mOnSerialListener.onReceivedData(readData, size);
                             }
                         }
 
@@ -141,17 +137,15 @@ public class SerialController {
         this.mOnSerialListener = onSerialListener;
     }
 
-
     /**
      * 串口监听
      */
     public interface OnSerialListener {
+
         /**
          * 串口数据返回
-         *
-         * @param data 数据
          */
-        void onReceivedData(String data);
+        void onReceivedData(byte[] data, int size);
 
         /**
          * 串口打开成功
@@ -160,8 +154,6 @@ public class SerialController {
 
         /**
          * 串口打开异常
-         *
-         * @param e 异常
          */
         void onSerialOpenException(Exception e);
     }

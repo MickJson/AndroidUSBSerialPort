@@ -12,7 +12,6 @@
     <string name="close_port">关闭</string>
 
     <string name="provide_capture_function">提供数据截图功能</string>
-    <string name="greater_than_ff">%s 大于0xff</string>
     <string name="is_not_hex">%s 不是十六进制数</string>
     <string name="send_data_is_null">要发送的十六进制数据为空</string>
     <string name="transcoding_failure">转换编码失败</string>

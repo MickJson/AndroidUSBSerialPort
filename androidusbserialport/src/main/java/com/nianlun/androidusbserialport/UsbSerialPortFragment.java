@@ -138,7 +138,7 @@ public class UsbSerialPortFragment extends Fragment implements UsbSerialPortCont
 
     @Override
     public void onSendException(Exception e) {
-        showData(getResources().getString(R.string.open_port_success));
+        showData(getResources().getString(R.string.serial_write_fail));
     }
 
     @Override
@@ -178,27 +178,35 @@ public class UsbSerialPortFragment extends Fragment implements UsbSerialPortCont
     }
 
     private boolean sendHexData(String command) {
-        String[] hexs = command.split(" ");
-        byte[] bytes = new byte[hexs.length];
-        boolean okflag = true;
-        int i = 0;
-        for (String hex : hexs) {
-            try {
-                int d = Integer.parseInt(hex, 16);
-                if (d > 255) {
-                    showData(String.format(getResources().getString(R.string.greater_than_ff), hex));
-                    okflag = false;
-                } else {
-                    bytes[i] = (byte) d;
-                }
-            } catch (NumberFormatException e) {
-                showData(String.format(getResources().getString(R.string.is_not_hex), hex));
-                e.printStackTrace();
-                okflag = false;
-            }
-            i++;
+//        String[] hexs = command.split(" ");
+//        byte[] bytes = new byte[hexs.length];
+//        boolean okflag = true;
+//        int i = 0;
+//        for (String hex : hexs) {
+//            try {
+//                int d = Integer.parseInt(hex, 16);
+//                if (d > 255) {
+//                    showData(String.format(getResources().getString(R.string.greater_than_ff), hex));
+//                    okflag = false;
+//                } else {
+//                    bytes[i] = (byte) d;
+//                }
+//            } catch (NumberFormatException e) {
+//                showData(String.format(getResources().getString(R.string.is_not_hex), hex));
+//                e.printStackTrace();
+//                okflag = false;
+//            }
+//            i++;
+//        }
+        command = command.replace(" ", "");
+        byte[] bytes;
+        try {
+            bytes = HexDump.hexStringToByteArray(command);
+        } catch (Exception e) {
+            showData(getResources().getString(R.string.is_not_hex, command));
+            return false;
         }
-        if (okflag && bytes.length > 0) {
+        if (bytes.length > 0) {
             return mUsbSerialPortController.sendSerialPort(bytes);
         }
         return false;
