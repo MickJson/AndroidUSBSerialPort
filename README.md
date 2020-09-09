@@ -7,6 +7,8 @@
 
 [Android串口通信（二）](https://www.cnblogs.com/jqnl/p/13633814.html)
 
+tool文件夹中附有PC串口调试工具供使用：serial_port_utility_latest.exe
+
 参考库：
 
 谷歌官方android-serialport-api库：[https://github.com/cepr/android-serialport-api](https://github.com/cepr/android-serialport-api)
